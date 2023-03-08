@@ -10,7 +10,10 @@ export default function Checkout({totalAmount}) {
     const dispatch = useDispatch();
 
     const orderState = useSelector(state=>state.placeOrderReducer);
-    const { loading, success, error } = orderState; 
+    const { loading, success, error } = orderState;
+
+    const cartState = useSelector(state=> state.cartReducer);
+    const {cartItems} = cartState;
 
     function tokenHandler(token) {
         console.log(token);
@@ -18,20 +21,28 @@ export default function Checkout({totalAmount}) {
     }
 
     return (
-        <StripeCheckout
-            amount = {totalAmount*100}
-            shippingAddress
-            token = {tokenHandler}
-            stripeKey= 'pk_test_51MigHSSHTcSHB7wrmtCRu7RcIGaH48NmStUBYbliRoFd2jnbbKZ0PLmNrqJUAepsLsj4MFaAertSAM408ElusXDv00wOigxBf0'
-            currency = 'INR'
-        >
-            { loading && <Loading /> }
-            { success && <Success message="Order Placed!!" /> }
-            { error && <Error error="Opps, something went wrong" /> }
+        <div>
 
-            <button>
-                Order now!
-            </button>
-        </StripeCheckout>
+            {!localStorage.getItem('currentUser') ? <Error error="Please Login first!" /> : (
+
+            <StripeCheckout
+                amount = {totalAmount*100}
+                shippingAddress
+                token = {tokenHandler}
+                stripeKey= 'pk_test_51MigHSSHTcSHB7wrmtCRu7RcIGaH48NmStUBYbliRoFd2jnbbKZ0PLmNrqJUAepsLsj4MFaAertSAM408ElusXDv00wOigxBf0'
+                currency = 'INR'
+            >
+                { loading && <Loading /> }
+                { success && <Success message="Order Placed!!" /> && localStorage.setItem('cartItems', JSON.stringify([])) }
+                { error && <Error error="Opps, something went wrong" /> }
+
+                <button>
+                    Order now!
+                </button>
+            </StripeCheckout>
+
+            )}
+
+        </div>
     );
 }
