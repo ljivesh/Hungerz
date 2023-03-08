@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../actions/userAction";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
-import Success from "../components/success";
+import Success from "../components/Success";
 import './Login.css'
 
 function Login() {
