@@ -1,3 +1,4 @@
+import { current } from "@reduxjs/toolkit";
 import Axios from "../Axios";
 
 
@@ -28,7 +29,9 @@ export const getUserOrders = ()=> async (dispatch, getState)=> {
     
     try {
 
-        const response = await Axios.get('api/orders/getuserorders', {userid: currentUser._id});
+        console.log("sending request.. with userID: "+currentUser._id );
+        const response = await Axios.get('api/orders/getuserorders/'+currentUser._id);
+        console.log("got request successfully with response "+ response);
         dispatch({type: 'GET_ORDERS_SUCCESS', payload: response.data});
 
     }
