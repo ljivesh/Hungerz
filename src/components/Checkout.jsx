@@ -33,7 +33,7 @@ export default function Checkout({totalAmount}) {
                 currency = 'INR'
             >
                 { loading && <Loading /> }
-                { success && <Success message="Order Placed!!" /> && localStorage.setItem('cartItems', JSON.stringify([])) }
+                { success &&  <Success message="Order Placed!!" /> }
                 { error && <Error error="Opps, something went wrong" /> }
 
                 <button>
